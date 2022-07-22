@@ -1,0 +1,35 @@
+illustration 
+
+write()                                 uesr space
+ecall ⬅️————————————⬆️
+  ⬇️                ⬆️
+————————————————————————————————————————————————————-
+uservec           userset               
+  ⬇️                 ⬆️
+usertrap         usertrapret            kernel space
+  ⬇️                 ⬆️
+syscall--------------⬆️
+ ⬇️ ⬆️
+sys_write
+
+functions detail
+
+write()
+li  a7  SYS_write
+ecall
+ret
+
+\\
+• stvec: The kernel writes the address of its trap handler here
+• sepc: When a trap occurs, RISC-V saves the program counter here (since the pc is then
+overwritten with the value in stvec). The sret (return from trap) instruction copies sepc
+to the pc. The kernel can write sepc to control where sret goes.
+• scause: RISC-V puts a number here that describes the reason for the trap.
+• sscratch: The kernel places a value here that comes in handy at the very start of a trap
+handler.
+• sstatus: The SIE bit in sstatus controls whether device interrupts are enabled. If the
+kernel clears SIE, the RISC-V will defer device interrupts until the kernel sets SIE. The SPP
+bit indicates whether a trap came from user mode or supervisor mode, and controls to what
+mode sret returns.
+ecall
+

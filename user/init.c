@@ -17,6 +17,8 @@ main(void)
   int pid, wpid;
 
   if(open("console", O_RDWR) < 0){
+// mknode create an inode in the filesystem 
+// which can be a file, directory, device, fifo, etc
     mknod("console", CONSOLE, 0);
     open("console", O_RDWR);
   }

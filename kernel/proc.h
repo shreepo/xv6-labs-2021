@@ -105,4 +105,12 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  
+  //these are variable for traps lab,and p->lock need not be held
+  int alarm_interval;
+  void (*alarm_handle)();
+  int ticks_count;
+  struct trapframe* alarm_trapframe; 
+  int is_alarming;
+  
 };
